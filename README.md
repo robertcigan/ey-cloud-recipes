@@ -1,6 +1,11 @@
-ey-cloud-recipes
+ey-cloud-passenger-monitor-memory-limit
 ===============
-This is a repository of some basic recipes for EY-Cloud using chef to deploy, setup, and configure common tools for Rails applications.
+EngineYard monitors automatically your passenger instances and terminates them if a limit 250MB by default is exceeded. 
+If your app uses more for whatever reason you might want to increase that limit, otherwire you will receive a lot of SIGABRT errors in you box. 
+
+Use the passenger_monitor_memory_limit cookbook or copy & include it to your chef recipes (add require_recipe "passenger_monitor_memory_limit" into your main recipe/default.rb).
+Works for multiapp environment as well as for single app environment.
+By default there's a 400MB limit. Change it to desired value in recipes/default.rb .
 
 Installation
 ============
