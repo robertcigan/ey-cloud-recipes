@@ -1,4 +1,4 @@
-ey-cloud-passenger-monitor-memory-limit
+passenger-monitor-memory-limit cookbook recipe for ey-cloud-recipes
 ===============
 EngineYard monitors automatically your passenger instances and terminates them if a limit 250MB by default is exceeded. 
 If your app uses more for whatever reason you might want to increase that limit, otherwire you will receive a lot of SIGABRT errors in you box. 
