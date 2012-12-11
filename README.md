@@ -11,7 +11,7 @@ Follow these steps to use custom deployment recipes with your applications.
   recipes after the default Engine Yard recipes have run. When you
   update your recipes, just re-run `ey recipes upload -e ENV`.
 
-List of custom recipes follow. To enable add ie. `require_recipe "passenger_monitor_memory_limit"` for each of the recipes into cookbooks/main/recipes/default.rb
+List of custom recipes follow. To enable add uncomment a line in `cookbooks/main/recipes/default.rb`
 
 passenger-monitor-memory-limit
 ===================================================================
