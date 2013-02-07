@@ -6,12 +6,12 @@ Follow these steps to use custom deployment recipes with your applications.
 * Install the engineyard gem:
   $ gem install engineyard
 * Add any custom recipes or tweaks to your copy of these recipes (inspect each recipes)
-* Upload them with: `ey recipes upload -e ENV`, where ENV is the name of your environment in Engine Yard Cloud. This may be different than your Rails environment name.
+* Upload and enable them with: `ey recipes upload -e ENV`, where ENV is the name of your environment in Engine Yard Cloud. This may be different than your Rails environment name.
 * Once you have completed these steps, each rebuild will run the your
   recipes after the default Engine Yard recipes have run. When you
   update your recipes, just re-run `ey recipes upload -e ENV`.
 
-List of custom recipes follow. To enable add uncomment a line in `cookbooks/main/recipes/default.rb`
+List of custom recipes follow. To enable/disable uncomment/comment a line in `cookbooks/main/recipes/default.rb`
 
 passenger-monitor-memory-limit
 ===================================================================
@@ -33,5 +33,14 @@ Update and of following resource controls inside of `attributes/default.rb`
 `passenger_max_pool_size`
 `passenger_max_instances_per_app`
 `passenger_pool_idle_time`
+`passenger_min_instances`
 
+This will work ONLY for Rails 3 stack!!!
 
+passenger_killer
+================
+Default EY Passenger monitor split into 2 parts - this one kill -9 all instances listed in `ps` but not listed in `passenger status` - generally orphan processes.
+
+passenger_monitor
+=================
+Default EY Passenger monitor split into 2 parts - this one kill with USR signal (let the process to finish the request) when it reaches the memory limit (by default 250)

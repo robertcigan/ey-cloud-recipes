@@ -21,3 +21,22 @@ if ['app_master', 'app', 'solo'].include?(node[:instance_role])
     notifies :reload, resources(:service => :nginx), :delayed
   end
 end
+
+node["engineyard"]["environment"]["apps"].each do |app|
+  template "/data/nginx/servers/#{app["name"]}.conf" do
+    owner node[:owner_name]
+    group node[:owner_name]
+    mode 0644
+    source "nginx_app.conf.erb"
+    variables({
+      :domain_name => app["vhosts"].first["domain_name"],
+      :name => app["name"],
+      :app_type => app['type'] == 'rails' ? 'rails' : 'rack', 
+      :port => 80,
+      :framework_env => node["environment"]["framework_env"],
+      :passenger_min_instances => node[:passenger_min_instances]
+    })
+    notifies :reload, resources(:service => :nginx), :delayed
+  end
+end
+

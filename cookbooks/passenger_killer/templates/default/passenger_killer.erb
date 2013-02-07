@@ -1,0 +1,10 @@
+#!/bin/bash
+## Get a list of passenger workers.
+pstats=$(passenger-status 2>&1 | sed -r -e '/PID:/!d' -e 's/.*PID:\s([0-9]+).*/\1/' | sort | uniq)
+
+## Kill any passenger workers that are not in $pstats
+for pid in `diff <(ps aux | egrep -i ' Ra(ils|ck):' | awk '{print $2}' | sort -n) <(echo "$pstats") | grep '<' | awk '{print $2}'`; do
+  kill -9 $pid
+  logger -t passenger_monitor -s "Killing PID $pid - orphaned process"
+done
+
